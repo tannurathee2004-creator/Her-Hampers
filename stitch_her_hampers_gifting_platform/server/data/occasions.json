@@ -1,0 +1,72 @@
+[
+  {
+    "id": 1,
+    "name": "Birthday Glow",
+    "emoji": "🎂",
+    "badge": "Most Popular",
+    "description": "Sparkling rosé, bespoke jewelry & artisanal confections",
+    "startingPrice": 1499,
+    "rating": 4.9,
+    "reviews": 1200,
+    "count": 32,
+    "feature": "Includes keepsake box",
+    "featureIcon": "✨",
+    "image": "https://lh3.googleusercontent.com/aida-public/AB6AXuCUT01P9_BOb6EJwa6ExpyXx8VWZ9wwiPsDaM5BWbAhvkv5j6cT3oRDAk00jYVBY_zRcRMgB3NLvfyQrw2RneW9PDOhKYhyHf-dTdjxjqUMUalB3MEF2oRYoa9vXjZSw-xd6Dx25d3zjMBhLiphzueWkofAHoD3m1CgKxUI4xuBbUIKNyvJwWhQCGvh-qkhnLWC5LQNotTNipi29ylIrqpsm_BCoL3Rswx2eGlxyIu95upU1mAJq_keQQ"
+  },
+  {
+    "id": 2,
+    "name": "Friendship & Cozy Hugs",
+    "emoji": "👯",
+    "badge": "For Your Bestie",
+    "description": "Plush knit socks, warm ceramic mugs & self-care treats",
+    "startingPrice": 999,
+    "rating": 4.8,
+    "reviews": 840,
+    "count": 18,
+    "feature": "Relaxation certified",
+    "featureIcon": "spa",
+    "image": "https://lh3.googleusercontent.com/aida-public/AB6AXuCCjZ3YglABlySBpsY0IS4O7YOi2Mi2PBgRhpuprtAPmOFdG_q7A9GXlrTCbDlD8ZwV0aKxNwqFbvfgep8jprcduyvBqze3e-jg2la-LuhJdV4DR3NOVho5crrJ3E7Iem7UnpyxHzgjQhKv8itjImSidg85P_XACeDfp-0itUA2yuUAhs0tlc7PTgViXUxfsglD1ICyfEL1CuSchjoN8XwRIWMoT7rJgkbvT_iiTp792YnM3kYsIdg-Iw"
+  },
+  {
+    "id": 3,
+    "name": "Graduation & Boss Girl",
+    "emoji": "🎓",
+    "badge": "Big Wins",
+    "description": "Gold-foiled planners, custom tumblers & keepsake cards",
+    "startingPrice": 1299,
+    "rating": 5.0,
+    "reviews": 420,
+    "count": 14,
+    "feature": "Custom Name Foiling",
+    "featureIcon": "edit_note",
+    "image": "https://lh3.googleusercontent.com/aida-public/AB6AXuDiGcxISXYhuov8lN3S7VGWfht4h_CPz4Jx5oc1U-WHBrvwaJAzHtzzkw0Y6xGtX34kv8WrAr-9gTHipj-9KeZOzxV_1Rs06LA4mEgrY9TIwlBBBNWj-DLPuTsBUlGGiWJ4y4fZNkNticqJGqvQKVAQJBu3ruhyaVlApYFb6qSKY-R_c4pnesZwXEXpYcYT0GTIqBuG3JrrcxpvUIHKJOLnt_Nb5UtFZEQUHM_fDTM-NXV2zclve1Drvg"
+  },
+  {
+    "id": 4,
+    "name": "Luxe Anniversary Hatbox",
+    "emoji": "💕",
+    "badge": "Pure Romance",
+    "description": "Blush ranunculus, lavender candle & fine keepsake box",
+    "startingPrice": 1899,
+    "rating": 4.9,
+    "reviews": 610,
+    "count": 22,
+    "feature": "Fresh Silk Petals",
+    "featureIcon": "local_florist",
+    "image": "https://lh3.googleusercontent.com/aida-public/AB6AXuAnxtdiUU6CoO4s-jrSQc_NfxO6T5lLSY3DQ_VIik30qDvdnaa4CJsZDr4dl1fC95dvG77Yz-3cStqqATDzM3nY4mqpUil-A3mWghdxg8jg5u508kr6ePC9LJt0L9JDpiGMosI-28LY_wZKkoQimAmGzeuMBF3-F1_pcBC6qLa7K-HZWJK74r4To_OoIN3M5AXas3Irwvspxnu9xLeaF3j-JikHsbji2JOd0hkZ_EHMc8rDB-0T1raA8g"
+  },
+  {
+    "id": 5,
+    "name": "A Little Sunshine",
+    "emoji": "🌷",
+    "badge": "Just Because",
+    "description": "Surprise self-love deliveries with handwritten wax-seal notes and petite treats to brighten her Tuesday.",
+    "startingPrice": 799,
+    "rating": 4.7,
+    "reviews": 350,
+    "count": 15,
+    "feature": "Wax-Sealed Love Note",
+    "featureIcon": "mail",
+    "image": null
+  }
+]
