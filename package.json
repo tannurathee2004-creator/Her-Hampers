@@ -1,0 +1,14 @@
+{
+  "name": "her-hampers",
+  "version": "1.0.0",
+  "description": "Her Hampers — Curated gift hampers for the special women in your life",
+  "private": true,
+  "scripts": {
+    "dev:client": "cd client && npm run dev",
+    "dev:server": "cd server && npm run dev",
+    "dev": "npx -y concurrently \"npm run dev:server\" \"npm run dev:client\"",
+    "build": "cd client && npm run build",
+    "start": "cd server && npm start",
+    "install:all": "cd client && npm install && cd ../server && npm install"
+  }
+}
