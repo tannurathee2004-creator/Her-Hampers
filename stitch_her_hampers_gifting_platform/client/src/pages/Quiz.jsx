@@ -1,7 +1,7 @@
 import { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 
-const API_URL = import.meta.env.VITE_API_URL || 'http://localhost:5000/api';
+const API_URL = import.meta.env.PROD ? '/api' : 'http://localhost:5000/api';
 
 const aestheticOptions = [
   { key: 'cozy', emoji: '🧸', label: 'Cute & Cozy', desc: 'Soft knits, warm amber mugs & soothing scents', bgColor: 'bg-primary-fixed' },
