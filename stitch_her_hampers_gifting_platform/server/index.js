@@ -2,6 +2,7 @@ const express = require('express');
 const cors = require('cors');
 const helmet = require('helmet');
 const dotenv = require('dotenv');
+const path = require('path');
 
 dotenv.config({ path: '../.env' });
 
@@ -34,9 +35,17 @@ app.get('/api/health', (req, res) => {
   });
 });
 
-// 404 handler
-app.use((req, res) => {
+// Serve static files from the React frontend app
+app.use(express.static(path.join(__dirname, '../client/dist')));
+
+// 404 handler for API routes
+app.use('/api/*', (req, res) => {
   res.status(404).json({ error: 'Route not found' });
+});
+
+// All other GET requests not handled before will return our React app
+app.get('*', (req, res) => {
+  res.sendFile(path.join(__dirname, '../client/dist', 'index.html'));
 });
 
 // Error handler
