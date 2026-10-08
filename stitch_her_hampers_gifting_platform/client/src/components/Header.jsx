@@ -37,10 +37,10 @@ export default function Header() {
             <span className="material-symbols-outlined text-[22px]">favorite</span>
             <span className="absolute top-1.5 right-1.5 min-w-[18px] h-[18px] px-1 bg-primary text-on-primary font-label-sm text-[10px] rounded-full flex items-center justify-center shadow-[0_2px_8px_rgba(158,56,78,0.3)]">2</span>
           </button>
-          <button aria-label="Cart" className="relative w-11 h-11 flex items-center justify-center rounded-full text-on-surface hover:bg-surface-container-high transition-colors">
+          <Link to="/cart" aria-label="Cart" className="relative w-11 h-11 flex items-center justify-center rounded-full text-on-surface hover:bg-surface-container-high transition-colors">
             <span className="material-symbols-outlined text-[22px]">shopping_bag</span>
             <span className="absolute top-1.5 right-1.5 min-w-[18px] h-[18px] px-1 bg-tertiary-container text-on-tertiary-container font-label-sm text-[10px] rounded-full flex items-center justify-center">1</span>
-          </button>
+          </Link>
           <div className="w-8 h-8 ml-1 rounded-full bg-primary flex items-center justify-center shadow-[0_2px_8px_rgba(158,56,78,0.2)]">
             <span className="material-symbols-outlined text-on-primary text-[18px]">person</span>
           </div>
