@@ -49,7 +49,8 @@ export default function Shop() {
         setProducts(data.products || []);
         setLoading(false);
       })
-      .catch(() => {
+      .catch((err) => {
+        console.error('API Fetch Error:', err);
         setProducts([]);
         setLoading(false);
       });
