@@ -1,5 +1,6 @@
 import { useState, useEffect } from 'react';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
+import { useCart } from '../contexts/CartContext';
 
 import fallbackProducts from '../data/products.json';
 
@@ -21,6 +22,21 @@ export default function Quiz() {
   const [selectedBudget, setSelectedBudget] = useState(2);
   const [recommendation, setRecommendation] = useState(null);
   const [noteText, setNoteText] = useState('Happy Birthday to my favourite confidante & sister! 🌸');
+  
+  const { addToCart } = useCart();
+  const navigate = useNavigate();
+
+  const handleAddToCart = () => {
+    if (recommendation && recommendation.recommendation) {
+      // Create a personalized product object by spreading the recommendation and adding the note
+      const productToAdd = {
+        ...recommendation.recommendation,
+        personalizedNote: noteText
+      };
+      addToCart(productToAdd);
+      navigate('/cart');
+    }
+  };
 
   useEffect(() => {
     const budgetVal = budgetValues[selectedBudget];
@@ -307,7 +323,9 @@ export default function Quiz() {
 
           {/* CTAs */}
           <div className="flex flex-col space-y-2 pt-1">
-            <button className="relative w-full h-14 rounded-full bg-primary text-on-primary font-label-lg text-label-lg flex items-center justify-center gap-2 shadow-[0_8px_20px_rgba(158,56,78,0.35)] transition-all active:scale-[0.98] hover:bg-primary-container">
+            <button 
+              onClick={handleAddToCart}
+              className="relative w-full h-14 rounded-full bg-primary text-on-primary font-label-lg text-label-lg flex items-center justify-center gap-2 shadow-[0_8px_20px_rgba(158,56,78,0.35)] transition-all active:scale-[0.98] hover:bg-primary-container">
               <span className="material-symbols-outlined text-[20px]">shopping_bag</span>
               <span>Add to Bag &amp; Personalize</span>
               <span className="font-currency-md text-currency-md text-on-primary ml-1">• ₹{recommendation.recommendation.price?.toLocaleString('en-IN')}</span>

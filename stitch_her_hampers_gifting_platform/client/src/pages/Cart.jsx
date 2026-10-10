@@ -38,6 +38,15 @@ export default function Cart() {
                   <h3 className="font-headline-sm text-[16px] text-on-surface">{item.name}</h3>
                   <p className="font-body-sm text-on-surface-variant text-[12px] mt-1">₹{item.price.toLocaleString('en-IN')}</p>
                   
+                  {item.personalizedNote && (
+                    <div className="mt-2 bg-secondary-container/30 rounded-lg p-2 flex items-start gap-1.5 border border-secondary/10">
+                      <span className="material-symbols-outlined text-[14px] text-secondary mt-0.5">draw</span>
+                      <p className="font-body-sm text-[11px] text-on-surface italic line-clamp-2">
+                        "{item.personalizedNote}"
+                      </p>
+                    </div>
+                  )}
+                  
                   <div className="flex items-center gap-3 mt-3 bg-surface-container w-fit rounded-full px-1 py-1">
                     <button onClick={() => updateQuantity(item.id, item.quantity - 1)} className="w-6 h-6 flex items-center justify-center rounded-full bg-surface-container-lowest shadow-sm text-on-surface">
                       <span className="material-symbols-outlined text-[14px]">remove</span>
