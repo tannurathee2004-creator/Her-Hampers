@@ -10,8 +10,16 @@ export default function Home() {
 
   useEffect(() => {
     fetch(`${API_URL}/products?sort=best`)
-      .then(res => res.json())
-      .then(data => setBestSellers(data.products?.slice(0, 4) || []))
+      .then(res => {
+        if (!res.ok) throw new Error('Network response was not ok');
+        return res.json();
+      })
+      .then(data => {
+        if (!data || !data.products || !Array.isArray(data.products)) {
+          throw new Error('Invalid data format');
+        }
+        setBestSellers(data.products.slice(0, 4));
+      })
       .catch(() => {
         let sorted = [...fallbackProducts].sort((a,b) => b.reviews - a.reviews);
         setBestSellers(sorted.slice(0, 4));

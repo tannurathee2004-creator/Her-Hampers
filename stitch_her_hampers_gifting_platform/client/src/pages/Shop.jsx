@@ -51,9 +51,15 @@ export default function Shop() {
     }
 
     fetch(`${API_URL}/products?${params.toString()}`)
-      .then(res => res.json())
+      .then(res => {
+        if (!res.ok) throw new Error('Network response was not ok');
+        return res.json();
+      })
       .then(data => {
-        setProducts(data.products || []);
+        if (!data || !data.products || !Array.isArray(data.products)) {
+          throw new Error('Invalid data format');
+        }
+        setProducts(data.products);
         setLoading(false);
       })
       .catch((err) => {
