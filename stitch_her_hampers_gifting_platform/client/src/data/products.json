@@ -84,7 +84,7 @@
     "discount": 17,
     "rating": 4.9,
     "reviews": 184,
-    "image": "/hampers/rose.png",
+    "image": "/hampers/reverie_hamper.jpg",
     "extras": "Silk Box Included",
     "isBestseller": true,
     "isWishlisted": true
@@ -102,7 +102,7 @@
     "discount": 17,
     "rating": 4.8,
     "reviews": 92,
-    "image": "/hampers/cozy.png",
+    "image": "/hampers/hygge_hamper.jpg",
     "extras": "Woven Cotton Tote",
     "isBestseller": false,
     "isWishlisted": false
@@ -120,7 +120,7 @@
     "discount": 23,
     "rating": 4.7,
     "reviews": 56,
-    "image": "/hampers/elegant.png",
+    "image": "/hampers/botanical_hamper.jpg",
     "extras": "Gift Wrapped",
     "isBestseller": false,
     "isWishlisted": false
@@ -138,7 +138,7 @@
     "discount": 29,
     "rating": 4.6,
     "reviews": 78,
-    "image": "/hampers/festive.png",
+    "image": "/hampers/treats_hamper.jpg",
     "extras": "Ribbon Wrapped",
     "isBestseller": false,
     "isWishlisted": false
