@@ -1,6 +1,7 @@
 import { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import ProductCard from '../components/ProductCard';
+import fallbackProducts from '../data/products.json';
 
 const API_URL = import.meta.env.VITE_API_URL || 'http://localhost:5000/api';
 
@@ -11,7 +12,10 @@ export default function Home() {
     fetch(`${API_URL}/products?sort=best`)
       .then(res => res.json())
       .then(data => setBestSellers(data.products?.slice(0, 4) || []))
-      .catch(() => setBestSellers([]));
+      .catch(() => {
+        let sorted = [...fallbackProducts].sort((a,b) => b.reviews - a.reviews);
+        setBestSellers(sorted.slice(0, 4));
+      });
   }, []);
 
   return (

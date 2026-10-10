@@ -2,6 +2,8 @@ import { useState, useEffect, useRef } from 'react';
 import { Link } from 'react-router-dom';
 import ProductCard from '../components/ProductCard';
 
+import fallbackProducts from '../data/products.json';
+
 const API_URL = import.meta.env.VITE_API_URL || 'http://localhost:5000/api';
 
 const filters = [
@@ -51,7 +53,19 @@ export default function Shop() {
       })
       .catch((err) => {
         console.error('API Fetch Error:', err);
-        setProducts([]);
+        // Fallback to local data when backend is down
+        let result = [...fallbackProducts];
+        if (activeFilter !== 'all') {
+          if (activeFilter === 'budget') result = result.filter(p => p.price <= 999);
+          else if (activeFilter === 'luxury') result = result.filter(p => p.price >= 2000);
+          else result = result.filter(p => p.category === activeFilter);
+        }
+        if (activeSort === 'price-low') result.sort((a,b) => a.price - b.price);
+        else if (activeSort === 'price-high') result.sort((a,b) => b.price - a.price);
+        else if (activeSort === 'rating') result.sort((a,b) => b.rating - a.rating);
+        else result.sort((a,b) => b.reviews - a.reviews);
+        
+        setProducts(result);
         setLoading(false);
       });
   }, [activeFilter, activeSort]);
