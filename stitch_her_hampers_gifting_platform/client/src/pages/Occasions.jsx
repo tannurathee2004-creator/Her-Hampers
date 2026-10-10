@@ -2,7 +2,8 @@ import { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import WishlistButton from '../components/WishlistButton';
 
-const API_URL = import.meta.env.VITE_API_URL || 'http://localhost:5000/api';
+const API_URL_RAW = import.meta.env.VITE_API_URL || 'http://localhost:5000/api';
+const API_URL = API_URL_RAW.replace(/\/$/, '');
 
 const occasionChips = [
   { label: '✨ All Occasions', active: true },

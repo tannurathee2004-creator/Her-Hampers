@@ -3,7 +3,8 @@ import { Link } from 'react-router-dom';
 
 import fallbackProducts from '../data/products.json';
 
-const API_URL = import.meta.env.VITE_API_URL || 'http://localhost:5000/api';
+const API_URL_RAW = import.meta.env.VITE_API_URL || 'http://localhost:5000/api';
+const API_URL = API_URL_RAW.replace(/\/$/, '');
 
 const aestheticOptions = [
   { key: 'cozy', emoji: '🧸', label: 'Cute & Cozy', desc: 'Soft knits, warm amber mugs & soothing scents', bgColor: 'bg-primary-fixed' },
