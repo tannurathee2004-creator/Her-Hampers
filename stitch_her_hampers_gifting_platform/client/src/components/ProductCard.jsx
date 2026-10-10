@@ -1,16 +1,26 @@
 import { useState } from 'react';
 import WishlistButton from './WishlistButton';
 import { useCart } from '../contexts/CartContext';
+import { useWishlist } from '../contexts/WishlistContext';
 
 export default function ProductCard({ product, variant = 'grid' }) {
   const [added, setAdded] = useState(false);
+  const [wishlistAdded, setWishlistAdded] = useState(false);
   const { addToCart } = useCart();
+  const { addToWishlist } = useWishlist();
 
   const handleAddToCart = (e) => {
     e.preventDefault();
     addToCart(product);
     setAdded(true);
     setTimeout(() => setAdded(false), 1200);
+  };
+
+  const handleMoveToWishlist = (e) => {
+    e.preventDefault();
+    addToWishlist(product);
+    setWishlistAdded(true);
+    setTimeout(() => setWishlistAdded(false), 1200);
   };
 
   if (variant === 'slider') {
@@ -53,15 +63,26 @@ export default function ProductCard({ product, variant = 'grid' }) {
                 Save ₹{(product.originalPrice - product.price).toLocaleString('en-IN')} Today
               </span>
             </div>
-            <button
-              onClick={handleAddToCart}
-              className={`px-3.5 py-2 rounded-full font-label-md text-label-md flex items-center gap-1 shadow-[0_2px_8px_rgba(158,56,78,0.25)] active:scale-95 transition-all ${
-                added ? 'bg-secondary text-on-secondary' : 'bg-primary text-on-primary'
-              }`}
-            >
-              <span className="material-symbols-outlined text-[16px]">{added ? 'check' : 'keyboard_double_arrow_left'}</span>
-              <span>{added ? 'Added!' : 'Add'}</span>
-            </button>
+            <div className="flex flex-col gap-2 w-full max-w-[120px]">
+              <button
+                onClick={handleAddToCart}
+                className={`w-full px-2 py-1.5 rounded-full font-label-md text-[10px] flex items-center justify-center gap-1 shadow-sm active:scale-95 transition-all ${
+                  added ? 'bg-secondary text-on-secondary' : 'bg-primary text-on-primary'
+                }`}
+              >
+                <span className="material-symbols-outlined text-[14px]">{added ? 'check' : 'add'}</span>
+                <span>{added ? 'Added!' : 'Add to Box'}</span>
+              </button>
+              <button
+                onClick={handleMoveToWishlist}
+                className={`w-full px-2 py-1.5 rounded-full border border-outline font-label-md text-[10px] flex items-center justify-center gap-1 shadow-sm transition-all active:scale-95 ${
+                  wishlistAdded ? 'bg-secondary text-on-secondary border-secondary' : 'text-on-surface hover:bg-surface-container-high'
+                }`}
+              >
+                <span className="material-symbols-outlined text-[14px]">favorite</span>
+                <span>{wishlistAdded ? 'Moved!' : 'Move to Wishlist'}</span>
+              </button>
+            </div>
           </div>
         </div>
       </div>
@@ -117,15 +138,26 @@ export default function ProductCard({ product, variant = 'grid' }) {
               {product.discount}% OFF
             </span>
           </div>
-          <button
-            onClick={handleAddToCart}
-            className={`w-full h-8 rounded-full font-label-md text-label-md flex items-center justify-center gap-1 shadow-sm active:scale-95 transition-all ${
-              added ? 'bg-secondary text-on-secondary' : 'bg-primary text-on-primary'
-            }`}
-          >
-            <span className="material-symbols-outlined text-[16px]">{added ? 'check' : 'add'}</span>
-            <span>{added ? 'Added!' : 'Add to Box'}</span>
-          </button>
+          <div className="flex gap-2">
+            <button
+              onClick={handleAddToCart}
+              className={`flex-1 h-8 rounded-full font-label-md text-[11px] flex items-center justify-center gap-1 shadow-sm active:scale-95 transition-all ${
+                added ? 'bg-secondary text-on-secondary' : 'bg-primary text-on-primary'
+              }`}
+            >
+              <span className="material-symbols-outlined text-[14px]">{added ? 'check' : 'add'}</span>
+              <span>{added ? 'Added!' : 'Add to Box'}</span>
+            </button>
+            <button
+              onClick={handleMoveToWishlist}
+              className={`flex-1 h-8 rounded-full border border-outline font-label-md text-[11px] flex items-center justify-center gap-1 shadow-sm transition-all active:scale-95 ${
+                wishlistAdded ? 'bg-secondary text-on-secondary border-secondary' : 'text-on-surface hover:bg-surface-container-high'
+              }`}
+            >
+              <span className="material-symbols-outlined text-[14px]">favorite</span>
+              <span>{wishlistAdded ? 'Moved!' : 'Move to Wishlist'}</span>
+            </button>
+          </div>
         </div>
       </div>
     </article>
