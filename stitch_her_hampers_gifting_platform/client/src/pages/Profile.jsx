@@ -45,13 +45,13 @@ export default function Profile() {
       </div>
 
       <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-        <div className="p-6 rounded-2xl bg-surface-container-lowest border border-outline-variant hover:border-primary/30 transition-colors cursor-pointer group">
+        <Link to="/orders" className="p-6 rounded-2xl bg-surface-container-lowest border border-outline-variant hover:border-primary/30 transition-colors cursor-pointer group">
           <div className="w-12 h-12 rounded-full bg-secondary-container text-on-secondary-container flex items-center justify-center mb-4 group-hover:scale-110 transition-transform">
             <span className="material-symbols-outlined">package_2</span>
           </div>
           <h3 className="font-headline-sm text-on-surface">My Orders</h3>
           <p className="font-body-sm text-on-surface-variant mt-1">Track, return, or buy things again</p>
-        </div>
+        </Link>
 
         <Link to="/wishlist" className="p-6 rounded-2xl bg-surface-container-lowest border border-outline-variant hover:border-primary/30 transition-colors cursor-pointer group">
           <div className="w-12 h-12 rounded-full bg-secondary-container text-on-secondary-container flex items-center justify-center mb-4 group-hover:scale-110 transition-transform">
@@ -61,21 +61,21 @@ export default function Profile() {
           <p className="font-body-sm text-on-surface-variant mt-1">View your saved hampers</p>
         </Link>
 
-        <div className="p-6 rounded-2xl bg-surface-container-lowest border border-outline-variant hover:border-primary/30 transition-colors cursor-pointer group">
+        <Link to="/addresses" className="p-6 rounded-2xl bg-surface-container-lowest border border-outline-variant hover:border-primary/30 transition-colors cursor-pointer group">
           <div className="w-12 h-12 rounded-full bg-secondary-container text-on-secondary-container flex items-center justify-center mb-4 group-hover:scale-110 transition-transform">
             <span className="material-symbols-outlined">location_on</span>
           </div>
           <h3 className="font-headline-sm text-on-surface">Addresses</h3>
           <p className="font-body-sm text-on-surface-variant mt-1">Manage delivery addresses</p>
-        </div>
+        </Link>
 
-        <div className="p-6 rounded-2xl bg-surface-container-lowest border border-outline-variant hover:border-primary/30 transition-colors cursor-pointer group">
+        <Link to="/settings" className="p-6 rounded-2xl bg-surface-container-lowest border border-outline-variant hover:border-primary/30 transition-colors cursor-pointer group">
           <div className="w-12 h-12 rounded-full bg-secondary-container text-on-secondary-container flex items-center justify-center mb-4 group-hover:scale-110 transition-transform">
             <span className="material-symbols-outlined">settings</span>
           </div>
           <h3 className="font-headline-sm text-on-surface">Settings</h3>
           <p className="font-body-sm text-on-surface-variant mt-1">Account settings and preferences</p>
-        </div>
+        </Link>
       </div>
     </div>
   );

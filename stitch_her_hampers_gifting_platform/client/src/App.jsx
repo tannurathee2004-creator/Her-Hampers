@@ -7,6 +7,9 @@ import Shop from './pages/Shop';
 import Cart from './pages/Cart';
 import Profile from './pages/Profile';
 import Wishlist from './pages/Wishlist';
+import Orders from './pages/Orders';
+import Addresses from './pages/Addresses';
+import Settings from './pages/Settings';
 import ScrollToTop from './components/ScrollToTop';
 import { CartProvider } from './contexts/CartContext';
 import { WishlistProvider } from './contexts/WishlistContext';
@@ -26,6 +29,9 @@ function App() {
               <Route path="cart" element={<Cart />} />
               <Route path="profile" element={<Profile />} />
               <Route path="wishlist" element={<Wishlist />} />
+              <Route path="orders" element={<Orders />} />
+              <Route path="addresses" element={<Addresses />} />
+              <Route path="settings" element={<Settings />} />
             </Route>
           </Routes>
         </BrowserRouter>
