@@ -26,6 +26,14 @@ export function WishlistProvider({ children }) {
     });
   };
 
+  const addToWishlist = (product) => {
+    setWishlistItems(prev => {
+      const isExisting = prev.some(item => item.id === product.id);
+      if (isExisting) return prev;
+      return [...prev, product];
+    });
+  };
+
   const isInWishlist = (productId) => {
     return wishlistItems.some(item => item.id === productId);
   };
@@ -33,7 +41,7 @@ export function WishlistProvider({ children }) {
   const wishlistCount = wishlistItems.length;
 
   return (
-    <WishlistContext.Provider value={{ wishlistItems, toggleWishlist, isInWishlist, wishlistCount }}>
+    <WishlistContext.Provider value={{ wishlistItems, toggleWishlist, addToWishlist, isInWishlist, wishlistCount }}>
       {children}
     </WishlistContext.Provider>
   );
