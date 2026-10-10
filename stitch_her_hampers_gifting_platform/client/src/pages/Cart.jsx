@@ -1,8 +1,15 @@
 import { Link } from 'react-router-dom';
 import { useCart } from '../contexts/CartContext';
+import { useWishlist } from '../contexts/WishlistContext';
 
 export default function Cart() {
   const { cartItems, updateQuantity, removeFromCart, cartTotal } = useCart();
+  const { addToWishlist } = useWishlist();
+
+  const handleMoveToWishlist = (item) => {
+    addToWishlist(item);
+    removeFromCart(item.id);
+  };
 
   return (
     <div className="pt-24 px-margin pb-32 max-w-7xl mx-auto min-h-screen flex flex-col">
@@ -41,9 +48,15 @@ export default function Cart() {
                     </button>
                   </div>
                 </div>
-                <button onClick={() => removeFromCart(item.id)} className="text-error w-8 h-8 flex items-center justify-center rounded-full hover:bg-error-container/20 self-start">
-                  <span className="material-symbols-outlined text-[20px]">delete</span>
-                </button>
+                <div className="flex flex-col items-end gap-2 self-start">
+                  <button onClick={() => removeFromCart(item.id)} className="text-error w-8 h-8 flex items-center justify-center rounded-full hover:bg-error-container/20">
+                    <span className="material-symbols-outlined text-[20px]">delete</span>
+                  </button>
+                  <button onClick={() => handleMoveToWishlist(item)} className="text-primary text-[12px] font-label-md hover:underline flex items-center gap-1">
+                    <span className="material-symbols-outlined text-[14px]">favorite</span>
+                    Move to Wishlist
+                  </button>
+                </div>
               </div>
             ))}
           </div>
