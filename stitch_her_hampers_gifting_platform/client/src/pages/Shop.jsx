@@ -43,7 +43,7 @@ export default function Shop() {
     }
     params.set('sort', activeSort);
 
-    fetch(`${API_URL}/products?${params}`)
+    fetch(`${API_URL}/products?${params.toString()}`)
       .then(res => res.json())
       .then(data => {
         setProducts(data.products || []);
