@@ -12,7 +12,7 @@
     "discount": 18,
     "rating": 4.9,
     "reviews": 118,
-    "image": "https://images.unsplash.com/photo-1549465220-1a8b9238cd48?w=800&q=80",
+    "image": "/hampers/rose.png",
     "extras": "Silk Box Included",
     "isBestseller": true,
     "isWishlisted": true
@@ -30,7 +30,7 @@
     "discount": 15,
     "rating": 4.8,
     "reviews": 92,
-    "image": "https://images.unsplash.com/photo-1513201099705-a9746e1e201f?w=800&q=80",
+    "image": "/hampers/cozy.png",
     "extras": "Woven Cotton Tote",
     "isBestseller": false,
     "isWishlisted": false
@@ -48,7 +48,7 @@
     "discount": 20,
     "rating": 5,
     "reviews": 240,
-    "image": "https://images.unsplash.com/photo-1555529771-835f59fc5efe?w=800&q=80",
+    "image": "/hampers/elegant.png",
     "extras": "Keepsake Box",
     "isBestseller": true,
     "isWishlisted": false
@@ -66,7 +66,7 @@
     "discount": 12,
     "rating": 4.9,
     "reviews": 64,
-    "image": "https://images.unsplash.com/photo-1607344645866-009c320b63e0?w=800&q=80",
+    "image": "/hampers/festive.png",
     "extras": "Custom Name Foiling",
     "isBestseller": false,
     "isWishlisted": false
@@ -84,7 +84,7 @@
     "discount": 17,
     "rating": 4.9,
     "reviews": 184,
-    "image": "https://images.unsplash.com/photo-1549465220-1a8b9238cd48?w=800&q=80",
+    "image": "/hampers/rose.png",
     "extras": "Silk Box Included",
     "isBestseller": true,
     "isWishlisted": true
@@ -102,7 +102,7 @@
     "discount": 17,
     "rating": 4.8,
     "reviews": 92,
-    "image": "https://images.unsplash.com/photo-1513201099705-a9746e1e201f?w=800&q=80",
+    "image": "/hampers/cozy.png",
     "extras": "Woven Cotton Tote",
     "isBestseller": false,
     "isWishlisted": false
@@ -120,7 +120,7 @@
     "discount": 23,
     "rating": 4.7,
     "reviews": 56,
-    "image": "https://images.unsplash.com/photo-1555529771-835f59fc5efe?w=800&q=80",
+    "image": "/hampers/elegant.png",
     "extras": "Gift Wrapped",
     "isBestseller": false,
     "isWishlisted": false
@@ -138,7 +138,7 @@
     "discount": 29,
     "rating": 4.6,
     "reviews": 78,
-    "image": "https://images.unsplash.com/photo-1607344645866-009c320b63e0?w=800&q=80",
+    "image": "/hampers/festive.png",
     "extras": "Ribbon Wrapped",
     "isBestseller": false,
     "isWishlisted": false
