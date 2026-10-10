@@ -24,6 +24,12 @@ export default function Occasions() {
       .catch(() => setOccasions([]));
   }, []);
 
+  const filteredOccasions = occasions.filter(occasion => {
+    if (activeChip === 0) return true;
+    const activeEmoji = occasionChips[activeChip].label.split(' ')[0];
+    return occasion.emoji === activeEmoji;
+  });
+
   return (
     <>
       {/* Express Delivery Banner */}
@@ -69,7 +75,7 @@ export default function Occasions() {
 
       {/* Occasion Cards */}
       <div className="px-margin flex flex-col gap-5 pb-6">
-        {occasions.filter(o => o.image).map((occasion) => (
+        {filteredOccasions.filter(o => o.image).map((occasion) => (
           <article
             key={occasion.id}
             className="group relative bg-surface-container-lowest rounded-3xl overflow-hidden shadow-[0_4px_16px_-2px_rgba(72,52,65,0.04),0_8px_24px_0_rgba(217,101,123,0.06)] transition-all duration-300 active:scale-[0.99]"
@@ -119,7 +125,7 @@ export default function Occasions() {
         ))}
 
         {/* Just Because Card */}
-        {occasions.filter(o => !o.image).map((occasion) => (
+        {filteredOccasions.filter(o => !o.image).map((occasion) => (
           <article
             key={occasion.id}
             className="relative bg-gradient-to-br from-surface-container-low via-surface-container-lowest to-surface-container-high rounded-3xl p-5 shadow-[0_4px_16px_-2px_rgba(72,52,65,0.04),0_8px_24px_0_rgba(217,101,123,0.06)] overflow-hidden"
