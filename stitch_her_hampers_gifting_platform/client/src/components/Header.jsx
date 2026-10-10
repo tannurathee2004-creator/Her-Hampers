@@ -77,9 +77,9 @@ export default function Header() {
                   <span className="absolute top-1.5 right-1.5 min-w-[18px] h-[18px] px-1 bg-tertiary-container text-on-tertiary-container font-label-sm text-[10px] rounded-full flex items-center justify-center">{cartCount}</span>
                 )}
               </Link>
-              <div className="w-8 h-8 ml-1 rounded-full bg-primary flex items-center justify-center shadow-[0_2px_8px_rgba(158,56,78,0.2)]">
+              <Link to="/profile" aria-label="Profile" className="w-8 h-8 ml-1 rounded-full bg-primary flex items-center justify-center shadow-[0_2px_8px_rgba(158,56,78,0.2)] hover:bg-primary/90 transition-colors">
                 <span className="material-symbols-outlined text-on-primary text-[18px]">person</span>
-              </div>
+              </Link>
             </>
           )}
         </div>
