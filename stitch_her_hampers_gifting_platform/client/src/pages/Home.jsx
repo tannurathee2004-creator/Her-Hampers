@@ -3,8 +3,8 @@ import { Link } from 'react-router-dom';
 import ProductCard from '../components/ProductCard';
 import fallbackProducts from '../data/products.json';
 
-const API_URL_RAW = import.meta.env.VITE_API_URL || 'http://localhost:5000/api';
-const API_URL = API_URL_RAW.replace(/\/$/, '');
+let API_URL = (import.meta.env.VITE_API_URL || 'http://localhost:5000/api').replace(/\/$/, '');
+if (!API_URL.endsWith('/api')) API_URL += '/api';
 
 export default function Home() {
   const [bestSellers, setBestSellers] = useState([]);
