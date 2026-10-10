@@ -1,6 +1,8 @@
 import { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 
+import fallbackProducts from '../data/products.json';
+
 const API_URL = import.meta.env.VITE_API_URL || 'http://localhost:5000/api';
 
 const aestheticOptions = [
@@ -11,6 +13,7 @@ const aestheticOptions = [
 ];
 
 const budgetOptions = ['₹999', '₹1,499', '₹1,800+ ✨'];
+const budgetValues = [999, 1499, 2500];
 
 export default function Quiz() {
   const [selectedVibe, setSelectedVibe] = useState('cozy');
@@ -19,11 +22,41 @@ export default function Quiz() {
   const [noteText, setNoteText] = useState('Happy Birthday to my favourite confidante & sister! 🌸');
 
   useEffect(() => {
-    fetch(`${API_URL}/quiz/recommend?recipient=bestfriend&occasion=birthday&vibe=${selectedVibe}&budget=2500`)
+    const budgetVal = budgetValues[selectedBudget];
+    fetch(`${API_URL}/quiz/recommend?recipient=bestfriend&occasion=birthday&vibe=${selectedVibe}&budget=${budgetVal}`)
       .then(res => res.json())
       .then(data => setRecommendation(data))
-      .catch(() => setRecommendation(null));
-  }, [selectedVibe]);
+      .catch(() => {
+        // Fallback logic
+        let result = [...fallbackProducts];
+        
+        const vibeMap = {
+          cozy: ['cozy'],
+          chic: ['beauty'],
+          glow: ['beauty', 'floral'],
+          dreamer: ['cozy', 'chocolates']
+        };
+        const categories = vibeMap[selectedVibe] || ['cozy'];
+        result = result.filter(p => categories.includes(p.category));
+        result = result.filter(p => p.price <= budgetVal);
+        result.sort((a, b) => b.rating - a.rating || b.reviews - a.reviews);
+        
+        const topMatch = result[0] || fallbackProducts[0];
+        const matchScore = Math.min(98, 85 + Math.floor(Math.random() * 14));
+        
+        setRecommendation({
+          recommendation: {
+            ...topMatch,
+            matchScore,
+            whyShellLove: 'Curated perfectly for her unique style!',
+            inclusions: [
+              { emoji: '🕯️', label: 'Scented Candle' },
+              { emoji: '💌', label: 'Wax-Sealed Note', highlight: true }
+            ]
+          }
+        });
+      });
+  }, [selectedVibe, selectedBudget]);
 
   return (
     <div className="px-margin space-y-space-lg">
