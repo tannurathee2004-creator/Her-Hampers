@@ -6,26 +6,31 @@ import Quiz from './pages/Quiz';
 import Shop from './pages/Shop';
 import Cart from './pages/Cart';
 import Profile from './pages/Profile';
+import Wishlist from './pages/Wishlist';
 import ScrollToTop from './components/ScrollToTop';
 import { CartProvider } from './contexts/CartContext';
+import { WishlistProvider } from './contexts/WishlistContext';
 
 function App() {
   return (
-    <CartProvider>
-      <BrowserRouter>
-        <ScrollToTop />
-        <Routes>
-          <Route path="/" element={<Layout />}>
-            <Route index element={<Home />} />
-            <Route path="occasions" element={<Occasions />} />
-            <Route path="quiz" element={<Quiz />} />
-            <Route path="shop" element={<Shop />} />
-            <Route path="cart" element={<Cart />} />
-            <Route path="profile" element={<Profile />} />
-          </Route>
-        </Routes>
-      </BrowserRouter>
-    </CartProvider>
+    <WishlistProvider>
+      <CartProvider>
+        <BrowserRouter>
+          <ScrollToTop />
+          <Routes>
+            <Route path="/" element={<Layout />}>
+              <Route index element={<Home />} />
+              <Route path="occasions" element={<Occasions />} />
+              <Route path="quiz" element={<Quiz />} />
+              <Route path="shop" element={<Shop />} />
+              <Route path="cart" element={<Cart />} />
+              <Route path="profile" element={<Profile />} />
+              <Route path="wishlist" element={<Wishlist />} />
+            </Route>
+          </Routes>
+        </BrowserRouter>
+      </CartProvider>
+    </WishlistProvider>
   );
 }
 

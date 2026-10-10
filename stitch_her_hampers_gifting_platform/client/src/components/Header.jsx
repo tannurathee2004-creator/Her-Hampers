@@ -1,11 +1,13 @@
 import { Link, useLocation, useNavigate } from 'react-router-dom';
 import { useState } from 'react';
 import { useCart } from '../contexts/CartContext';
+import { useWishlist } from '../contexts/WishlistContext';
 
 export default function Header() {
   const location = useLocation();
   const navigate = useNavigate();
   const { cartCount } = useCart();
+  const { wishlistCount } = useWishlist();
   const [isSearchOpen, setIsSearchOpen] = useState(false);
   const [searchQuery, setSearchQuery] = useState('');
 
@@ -67,10 +69,12 @@ export default function Header() {
           </button>
           {!isSearchOpen && (
             <>
-              <button aria-label="Wishlist" className="relative w-11 h-11 flex items-center justify-center rounded-full text-on-surface hover:bg-surface-container-high transition-colors">
+              <Link to="/wishlist" aria-label="Wishlist" className="relative w-11 h-11 flex items-center justify-center rounded-full text-on-surface hover:bg-surface-container-high transition-colors">
                 <span className="material-symbols-outlined text-[22px]">favorite</span>
-                <span className="absolute top-1.5 right-1.5 min-w-[18px] h-[18px] px-1 bg-primary text-on-primary font-label-sm text-[10px] rounded-full flex items-center justify-center shadow-[0_2px_8px_rgba(158,56,78,0.3)]">0</span>
-              </button>
+                {wishlistCount > 0 && (
+                  <span className="absolute top-1.5 right-1.5 min-w-[18px] h-[18px] px-1 bg-primary text-on-primary font-label-sm text-[10px] rounded-full flex items-center justify-center shadow-[0_2px_8px_rgba(158,56,78,0.3)]">{wishlistCount}</span>
+                )}
+              </Link>
               <Link to="/cart" aria-label="Cart" className="relative w-11 h-11 flex items-center justify-center rounded-full text-on-surface hover:bg-surface-container-high transition-colors">
                 <span className="material-symbols-outlined text-[22px]">shopping_bag</span>
                 {cartCount > 0 && (

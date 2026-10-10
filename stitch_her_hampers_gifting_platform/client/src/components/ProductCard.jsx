@@ -26,7 +26,7 @@ export default function ProductCard({ product, variant = 'grid' }) {
             {product.tag}
           </span>
           <WishlistButton
-            isActive={product.isWishlisted}
+            product={product}
             className="absolute top-2.5 right-2.5"
           />
         </div>
@@ -78,7 +78,7 @@ export default function ProductCard({ product, variant = 'grid' }) {
           src={product.image}
         />
         <WishlistButton
-          isActive={product.isWishlisted}
+          product={product}
           className="absolute top-2 right-2"
         />
         {product.tagType === 'bestseller' && (

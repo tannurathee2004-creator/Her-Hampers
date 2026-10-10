@@ -1,13 +1,15 @@
-import { useState, useRef } from 'react';
+import { useRef } from 'react';
+import { useWishlist } from '../contexts/WishlistContext';
 
-export default function WishlistButton({ isActive = false, className = '', size = 18 }) {
-  const [wishlisted, setWishlisted] = useState(isActive);
+export default function WishlistButton({ product, className = '', size = 18 }) {
+  const { isInWishlist, toggleWishlist } = useWishlist();
+  const wishlisted = isInWishlist(product.id);
   const btnRef = useRef(null);
 
   const handleClick = (e) => {
     e.preventDefault();
     e.stopPropagation();
-    setWishlisted(!wishlisted);
+    toggleWishlist(product);
 
     // Subtle pop animation
     if (!wishlisted && btnRef.current) {
