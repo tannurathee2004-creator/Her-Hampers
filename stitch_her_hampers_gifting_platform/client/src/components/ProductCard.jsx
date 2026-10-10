@@ -1,11 +1,14 @@
 import { useState } from 'react';
 import WishlistButton from './WishlistButton';
+import { useCart } from '../contexts/CartContext';
 
 export default function ProductCard({ product, variant = 'grid' }) {
   const [added, setAdded] = useState(false);
+  const { addToCart } = useCart();
 
   const handleAddToCart = (e) => {
     e.preventDefault();
+    addToCart(product);
     setAdded(true);
     setTimeout(() => setAdded(false), 1200);
   };

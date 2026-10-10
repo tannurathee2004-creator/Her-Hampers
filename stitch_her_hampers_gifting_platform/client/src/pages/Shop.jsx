@@ -1,5 +1,5 @@
 import { useState, useEffect, useRef } from 'react';
-import { Link } from 'react-router-dom';
+import { Link, useSearchParams } from 'react-router-dom';
 import ProductCard from '../components/ProductCard';
 
 import fallbackProducts from '../data/products.json';
@@ -30,6 +30,8 @@ export default function Shop() {
   const [showSortMenu, setShowSortMenu] = useState(false);
   const [loading, setLoading] = useState(true);
   const sortRef = useRef(null);
+  const [searchParams] = useSearchParams();
+  const searchQuery = searchParams.get('search') || '';
 
   useEffect(() => {
     setLoading(true);
@@ -44,6 +46,9 @@ export default function Shop() {
       }
     }
     params.set('sort', activeSort);
+    if (searchQuery) {
+      params.set('search', searchQuery);
+    }
 
     fetch(`${API_URL}/products?${params.toString()}`)
       .then(res => res.json())
@@ -60,6 +65,10 @@ export default function Shop() {
           else if (activeFilter === 'luxury') result = result.filter(p => p.price >= 2000);
           else result = result.filter(p => p.category === activeFilter);
         }
+        if (searchQuery) {
+          const q = searchQuery.toLowerCase();
+          result = result.filter(p => p.name.toLowerCase().includes(q) || p.description.toLowerCase().includes(q));
+        }
         if (activeSort === 'price-low') result.sort((a,b) => a.price - b.price);
         else if (activeSort === 'price-high') result.sort((a,b) => b.price - a.price);
         else if (activeSort === 'rating') result.sort((a,b) => b.rating - a.rating);
@@ -68,7 +77,7 @@ export default function Shop() {
         setProducts(result);
         setLoading(false);
       });
-  }, [activeFilter, activeSort]);
+  }, [activeFilter, activeSort, searchQuery]);
 
   // Close sort menu on outside click
   useEffect(() => {

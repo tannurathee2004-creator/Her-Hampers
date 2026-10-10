@@ -1,15 +1,17 @@
 import { Link, useLocation } from 'react-router-dom';
-
-const navItems = [
-  { path: '/', icon: 'auto_awesome', label: 'Home', dataPath: 'home' },
-  { path: '/shop', icon: 'featured_seasonal_and_gifts', label: 'Shop', dataPath: 'shop-all' },
-  { path: '/occasions', icon: 'celebration', label: 'Occasions', dataPath: 'occasions' },
-  { path: '/quiz', icon: 'arrows_outward', label: 'Build', dataPath: 'build-a-box', badge: 'Custom' },
-  { path: '/cart', icon: 'shopping_basket', label: '₹1,499', dataPath: 'cart-bag', isPrice: true },
-];
+import { useCart } from '../contexts/CartContext';
 
 export default function BottomNav() {
   const location = useLocation();
+  const { cartTotal } = useCart();
+
+  const navItems = [
+    { path: '/', icon: 'auto_awesome', label: 'Home', dataPath: 'home' },
+    { path: '/shop', icon: 'featured_seasonal_and_gifts', label: 'Shop', dataPath: 'shop-all' },
+    { path: '/occasions', icon: 'celebration', label: 'Occasions', dataPath: 'occasions' },
+    { path: '/quiz', icon: 'arrows_outward', label: 'Build', dataPath: 'build-a-box', badge: 'Custom' },
+    { path: '/cart', icon: 'shopping_basket', label: `₹${cartTotal.toLocaleString('en-IN')}`, dataPath: 'cart-bag', isPrice: true },
+  ];
 
   return (
     <nav className="fixed bottom-0 w-full z-50 pb-safe pointer-events-none px-margin mb-3">
