@@ -131,7 +131,12 @@ export default function Occasions() {
                     <span>{occasion.feature}</span>
                   </span>
                   <Link
-                    to="/shop"
+                    to={`/shop?category=${
+                      occasion.emoji === '🎂' ? 'beauty' : 
+                      occasion.emoji === '👯' ? 'cozy' : 
+                      occasion.emoji === '🎓' ? 'cozy' : 
+                      occasion.emoji === '💕' ? 'floral' : 'all'
+                    }`}
                     className="inline-flex items-center justify-center gap-1 px-4 py-2 rounded-full bg-primary-container text-on-primary-container font-label-md text-label-md shadow-sm active:scale-95 transition-transform"
                   >
                     <span>Explore ({occasion.count})</span>
@@ -183,7 +188,7 @@ export default function Occasions() {
                 </div>
                 <span className="font-label-sm text-label-sm text-primary font-semibold">FREE</span>
               </div>
-              <Link to="/shop" className="relative z-10 flex-1 py-3 px-4 rounded-full bg-primary text-on-primary text-center font-label-lg text-label-lg shadow-[0_4px_16px_rgba(158,56,78,0.3)] active:scale-95 transition-transform flex items-center justify-center gap-1">
+              <Link to="/shop?category=chocolates" className="relative z-10 flex-1 py-3 px-4 rounded-full bg-primary text-on-primary text-center font-label-lg text-label-lg shadow-[0_4px_16px_rgba(158,56,78,0.3)] active:scale-95 transition-transform flex items-center justify-center gap-1">
                 <span>Explore Care Packs ({occasion.count})</span>
                 <span className="material-symbols-outlined text-[18px]">arrow_forward</span>
               </Link>
