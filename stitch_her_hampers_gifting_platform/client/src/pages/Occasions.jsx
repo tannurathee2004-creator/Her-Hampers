@@ -47,16 +47,32 @@ export default function Occasions() {
     return occasion.emoji === activeEmoji;
   });
 
-  const getProductsForOccasion = (emoji) => {
+  const getProductsForOccasion = (occasion) => {
     if (!products || products.length === 0) return fallbackProducts.slice(0, 4);
-    switch (emoji) {
-      case '🎂': return products.filter(p => ['beauty', 'cozy'].includes(p.category)).slice(0, 4);
-      case '👯': return products.filter(p => ['cozy'].includes(p.category)).slice(0, 4);
-      case '🎓': return products.filter(p => ['cozy', 'floral'].includes(p.category)).slice(0, 4);
-      case '💕': return products.filter(p => ['beauty', 'floral'].includes(p.category)).slice(0, 4);
-      case '🌷': return products.filter(p => ['chocolates', 'floral'].includes(p.category)).slice(0, 4);
-      default: return products.slice(0, 4);
+    
+    // Match by occasionId or occasionName
+    let matched = products.filter(p => 
+      (p.occasionId && p.occasionId === occasion.id) ||
+      (p.occasionName && p.occasionName.toLowerCase() === occasion.name.toLowerCase())
+    );
+
+    // Fallback match by keyword heuristics if not directly tagged
+    if (matched.length === 0) {
+      const occasionNameLower = (occasion.name || '').toLowerCase();
+      if (occasionNameLower.includes('birthday') || occasion.emoji === '🎂') {
+        matched = products.filter(p => p.name.toLowerCase().includes('birthday') || p.tag?.toLowerCase().includes('birthday'));
+      } else if (occasionNameLower.includes('friendship') || occasionNameLower.includes('bestie') || occasion.emoji === '👯') {
+        matched = products.filter(p => p.name.toLowerCase().includes('bestie') || p.name.toLowerCase().includes('friendship') || p.tag?.toLowerCase().includes('bestie'));
+      } else if (occasionNameLower.includes('graduation') || occasionNameLower.includes('boss') || occasion.emoji === '🎓') {
+        matched = products.filter(p => p.name.toLowerCase().includes('boss') || p.name.toLowerCase().includes('graduate') || p.name.toLowerCase().includes('conquered'));
+      } else if (occasionNameLower.includes('anniversary') || occasionNameLower.includes('romance') || occasion.emoji === '💕') {
+        matched = products.filter(p => p.name.toLowerCase().includes('anniversary') || p.name.toLowerCase().includes('romance') || p.tag?.toLowerCase().includes('romance'));
+      } else if (occasionNameLower.includes('sunshine') || occasion.emoji === '🌷') {
+        matched = products.filter(p => p.name.toLowerCase().includes('sunshine') || p.name.toLowerCase().includes('thinking') || p.tag?.toLowerCase().includes('sunshine'));
+      }
     }
+
+    return matched.length > 0 ? matched : products.slice(0, 4);
   };
 
   return (
@@ -158,10 +174,10 @@ export default function Occasions() {
             {/* Render matched Hampers here */}
             <div className="px-margin flex flex-col gap-2">
               <h4 className="font-label-lg text-label-lg text-on-surface flex items-center gap-1.5 ml-1">
-                <span>{occasion.emoji}</span> Hampers for {occasion.name.split(' ')[0]}
+                <span>{occasion.emoji}</span> Hampers for {occasion.name}
               </h4>
               <div className="grid grid-cols-2 gap-3">
-                {getProductsForOccasion(occasion.emoji).map(product => (
+                {getProductsForOccasion(occasion).map(product => (
                   <ProductCard key={product.id} product={product} variant="grid" />
                 ))}
               </div>
@@ -206,10 +222,10 @@ export default function Occasions() {
             {/* Render matched Hampers here */}
             <div className="px-margin flex flex-col gap-2">
               <h4 className="font-label-lg text-label-lg text-on-surface flex items-center gap-1.5 ml-1">
-                <span>{occasion.emoji}</span> Hampers for {occasion.name.split(' ')[0]}
+                <span>{occasion.emoji}</span> Hampers for {occasion.name}
               </h4>
               <div className="grid grid-cols-2 gap-3">
-                {getProductsForOccasion(occasion.emoji).map(product => (
+                {getProductsForOccasion(occasion).map(product => (
                   <ProductCard key={product.id} product={product} variant="grid" />
                 ))}
               </div>

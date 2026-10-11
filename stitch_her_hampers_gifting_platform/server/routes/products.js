@@ -5,7 +5,15 @@ const products = require('../data/products.json');
 // GET /api/products - Get all products with optional filtering & sorting
 router.get('/', (req, res) => {
   let result = [...products];
-  const { category, sort, minPrice, maxPrice, search } = req.query;
+  const { category, sort, minPrice, maxPrice, search, occasion } = req.query;
+
+  // Filter by occasion (id or name)
+  if (occasion && occasion !== 'all') {
+    result = result.filter(p => 
+      p.occasionId === Number(occasion) || 
+      p.occasionName?.toLowerCase() === occasion.toLowerCase()
+    );
+  }
 
   // Filter by category
   if (category && category !== 'all') {
