@@ -1,28 +1,46 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import { useCart } from '../contexts/CartContext';
+import { useUser } from '../contexts/UserContext';
 import indiaStatesAndCities from '../data/indiaStatesAndCities.json';
 
 const statesList = Object.keys(indiaStatesAndCities);
 
 export default function Checkout() {
   const { cartItems, cartTotal, clearCart } = useCart();
+  const { profile, updateProfile } = useUser();
   const navigate = useNavigate();
 
-  // Form states
+  // Form states with profile pre-filled automatically
   const [formData, setFormData] = useState({
-    recipientName: '',
-    phone: '',
-    email: '',
-    address: '',
-    state: 'Maharashtra',
-    city: 'Mumbai',
-    pincode: '',
+    recipientName: profile?.name || '',
+    phone: profile?.phone || '',
+    email: profile?.email || '',
+    address: profile?.address || '',
+    state: profile?.state || 'Maharashtra',
+    city: profile?.city || 'Mumbai',
+    pincode: profile?.pincode || '',
     deliverySlot: 'standard', // 'standard' | 'midnight'
     waxSealColor: 'Burgundy Rose',
     personalizedNote: '',
     paymentMethod: 'upi', // 'upi' | 'card' | 'cod'
   });
+
+  // Keep state and city in sync if profile updates or was loaded asynchronously
+  useEffect(() => {
+    if (profile) {
+      setFormData(prev => ({
+        ...prev,
+        recipientName: prev.recipientName || profile.name || '',
+        phone: prev.phone || profile.phone || '',
+        email: prev.email || profile.email || '',
+        address: prev.address || profile.address || '',
+        state: prev.state || profile.state || 'Maharashtra',
+        city: prev.city || profile.city || 'Mumbai',
+        pincode: prev.pincode || profile.pincode || '',
+      }));
+    }
+  }, [profile]);
 
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [orderSuccess, setOrderSuccess] = useState(null);
@@ -49,6 +67,17 @@ export default function Checkout() {
       alert('Please fill in the recipient name, phone, and delivery address.');
       return;
     }
+
+    // Automatically persist updated profile details for future sessions
+    updateProfile({
+      name: formData.recipientName,
+      phone: formData.phone,
+      email: formData.email,
+      address: formData.address,
+      state: formData.state,
+      city: formData.city,
+      pincode: formData.pincode,
+    });
 
     setIsSubmitting(true);
 
@@ -185,10 +214,16 @@ export default function Checkout() {
         <div className="flex-1 space-y-6">
           {/* Section 1: Recipient Information */}
           <div className="bg-surface-container-lowest p-6 rounded-3xl shadow-sm border border-outline-variant/30 space-y-4">
-            <h2 className="font-headline-sm text-[18px] text-on-surface flex items-center gap-2">
-              <span className="material-symbols-outlined text-primary text-[20px]">person</span>
-              1. Recipient & Contact Details
-            </h2>
+            <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-2">
+              <h2 className="font-headline-sm text-[18px] text-on-surface flex items-center gap-2">
+                <span className="material-symbols-outlined text-primary text-[20px]">person</span>
+                1. Recipient & Contact Details
+              </h2>
+              <span className="inline-flex items-center gap-1.5 text-[11px] font-label-sm text-secondary bg-secondary-fixed/40 px-2.5 py-1 rounded-full font-medium w-fit">
+                <span className="material-symbols-outlined text-[13px] text-secondary">cloud_done</span>
+                Auto-saved for next time
+              </span>
+            </div>
             <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
               <div>
                 <label className="block font-label-sm text-[12px] text-on-surface-variant mb-1 font-semibold">Recipient Full Name *</label>

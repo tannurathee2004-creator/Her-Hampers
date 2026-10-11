@@ -14,31 +14,34 @@ import Settings from './pages/Settings';
 import ScrollToTop from './components/ScrollToTop';
 import { CartProvider } from './contexts/CartContext';
 import { WishlistProvider } from './contexts/WishlistContext';
+import { UserProvider } from './contexts/UserContext';
 
 function App() {
   return (
-    <WishlistProvider>
-      <CartProvider>
-        <BrowserRouter>
-          <ScrollToTop />
-          <Routes>
-            <Route path="/" element={<Layout />}>
-              <Route index element={<Home />} />
-              <Route path="occasions" element={<Occasions />} />
-              <Route path="quiz" element={<Quiz />} />
-              <Route path="shop" element={<Shop />} />
-              <Route path="cart" element={<Cart />} />
-              <Route path="checkout" element={<Checkout />} />
-              <Route path="profile" element={<Profile />} />
-              <Route path="wishlist" element={<Wishlist />} />
-              <Route path="orders" element={<Orders />} />
-              <Route path="addresses" element={<Addresses />} />
-              <Route path="settings" element={<Settings />} />
-            </Route>
-          </Routes>
-        </BrowserRouter>
-      </CartProvider>
-    </WishlistProvider>
+    <UserProvider>
+      <WishlistProvider>
+        <CartProvider>
+          <BrowserRouter>
+            <ScrollToTop />
+            <Routes>
+              <Route path="/" element={<Layout />}>
+                <Route index element={<Home />} />
+                <Route path="occasions" element={<Occasions />} />
+                <Route path="quiz" element={<Quiz />} />
+                <Route path="shop" element={<Shop />} />
+                <Route path="cart" element={<Cart />} />
+                <Route path="checkout" element={<Checkout />} />
+                <Route path="profile" element={<Profile />} />
+                <Route path="wishlist" element={<Wishlist />} />
+                <Route path="orders" element={<Orders />} />
+                <Route path="addresses" element={<Addresses />} />
+                <Route path="settings" element={<Settings />} />
+              </Route>
+            </Routes>
+          </BrowserRouter>
+        </CartProvider>
+      </WishlistProvider>
+    </UserProvider>
   );
 }
 
