@@ -17,7 +17,11 @@ export default function Header() {
       case '/shop': return 'Shop All';
       case '/occasions': return 'Occasions';
       case '/quiz': return 'Gift Quiz';
-      default: return 'Home';
+      case '/cart': return 'Your Box';
+      case '/checkout': return 'Checkout';
+      case '/orders': return 'My Orders';
+      case '/wishlist': return 'Wishlist';
+      default: return 'Her Hampers';
     }
   };
 

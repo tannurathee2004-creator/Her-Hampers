@@ -5,6 +5,7 @@ import Occasions from './pages/Occasions';
 import Quiz from './pages/Quiz';
 import Shop from './pages/Shop';
 import Cart from './pages/Cart';
+import Checkout from './pages/Checkout';
 import Profile from './pages/Profile';
 import Wishlist from './pages/Wishlist';
 import Orders from './pages/Orders';
@@ -27,6 +28,7 @@ function App() {
               <Route path="quiz" element={<Quiz />} />
               <Route path="shop" element={<Shop />} />
               <Route path="cart" element={<Cart />} />
+              <Route path="checkout" element={<Checkout />} />
               <Route path="profile" element={<Profile />} />
               <Route path="wishlist" element={<Wishlist />} />
               <Route path="orders" element={<Orders />} />

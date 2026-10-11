@@ -88,10 +88,13 @@ export default function Cart() {
                 <span>₹{cartTotal.toLocaleString('en-IN')}</span>
               </div>
             </div>
-            <button className="w-full bg-primary text-on-primary py-3 rounded-full font-label-lg font-bold flex items-center justify-center gap-2 hover:bg-primary/90 transition-colors">
+            <Link
+              to="/checkout"
+              className="w-full bg-primary text-on-primary py-3.5 rounded-full font-label-lg font-bold flex items-center justify-center gap-2 hover:bg-primary/90 active:scale-[0.98] transition-all shadow-[0_4px_16px_rgba(158,56,78,0.25)]"
+            >
               <span>Proceed to Checkout</span>
-              <span className="material-symbols-outlined">arrow_right_alt</span>
-            </button>
+              <span className="material-symbols-outlined text-[20px]">arrow_forward</span>
+            </Link>
           </div>
         </div>
       )}
