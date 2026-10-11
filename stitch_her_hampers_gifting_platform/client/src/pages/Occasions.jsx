@@ -14,6 +14,7 @@ const occasionChips = [
   { label: '👯 Bestie Hugs' },
   { label: '🎓 Milestones' },
   { label: '💕 Romance' },
+  { label: '🌷 Just Because' },
 ];
 
 export default function Occasions() {
@@ -48,31 +49,70 @@ export default function Occasions() {
   });
 
   const getProductsForOccasion = (occasion) => {
-    if (!products || products.length === 0) return fallbackProducts.slice(0, 4);
-    
-    // Match by occasionId or occasionName
-    let matched = products.filter(p => 
+    // Combine products from API with fallbackProducts (by unique ID)
+    const allAvailable = [...products];
+    fallbackProducts.forEach(fp => {
+      if (!allAvailable.some(p => p.id === fp.id)) {
+        allAvailable.push(fp);
+      }
+    });
+
+    // 1. Direct match by occasionId or occasionName
+    let matched = allAvailable.filter(p => 
       (p.occasionId && p.occasionId === occasion.id) ||
       (p.occasionName && p.occasionName.toLowerCase() === occasion.name.toLowerCase())
     );
 
-    // Fallback match by keyword heuristics if not directly tagged
+    // 2. Keyword matching if occasionId is missing on some items
     if (matched.length === 0) {
       const occasionNameLower = (occasion.name || '').toLowerCase();
       if (occasionNameLower.includes('birthday') || occasion.emoji === '🎂') {
-        matched = products.filter(p => p.name.toLowerCase().includes('birthday') || p.tag?.toLowerCase().includes('birthday'));
+        matched = allAvailable.filter(p => 
+          p.name.toLowerCase().includes('birthday') || 
+          p.tag?.toLowerCase().includes('birthday') ||
+          p.occasionId === 1
+        );
       } else if (occasionNameLower.includes('friendship') || occasionNameLower.includes('bestie') || occasion.emoji === '👯') {
-        matched = products.filter(p => p.name.toLowerCase().includes('bestie') || p.name.toLowerCase().includes('friendship') || p.tag?.toLowerCase().includes('bestie'));
+        matched = allAvailable.filter(p => 
+          p.name.toLowerCase().includes('bestie') || 
+          p.name.toLowerCase().includes('friendship') || 
+          p.name.toLowerCase().includes('sister') ||
+          p.tag?.toLowerCase().includes('bestie') ||
+          p.occasionId === 2
+        );
       } else if (occasionNameLower.includes('graduation') || occasionNameLower.includes('boss') || occasion.emoji === '🎓') {
-        matched = products.filter(p => p.name.toLowerCase().includes('boss') || p.name.toLowerCase().includes('graduate') || p.name.toLowerCase().includes('conquered'));
+        matched = allAvailable.filter(p => 
+          p.name.toLowerCase().includes('boss') || 
+          p.name.toLowerCase().includes('graduate') || 
+          p.name.toLowerCase().includes('conquered') ||
+          p.tag?.toLowerCase().includes('milestone') ||
+          p.occasionId === 3
+        );
       } else if (occasionNameLower.includes('anniversary') || occasionNameLower.includes('romance') || occasion.emoji === '💕') {
-        matched = products.filter(p => p.name.toLowerCase().includes('anniversary') || p.name.toLowerCase().includes('romance') || p.tag?.toLowerCase().includes('romance'));
-      } else if (occasionNameLower.includes('sunshine') || occasion.emoji === '🌷') {
-        matched = products.filter(p => p.name.toLowerCase().includes('sunshine') || p.name.toLowerCase().includes('thinking') || p.tag?.toLowerCase().includes('sunshine'));
+        matched = allAvailable.filter(p => 
+          p.name.toLowerCase().includes('anniversary') || 
+          p.name.toLowerCase().includes('romance') || 
+          p.name.toLowerCase().includes('love') ||
+          p.tag?.toLowerCase().includes('romance') ||
+          p.occasionId === 4
+        );
+      } else if (occasionNameLower.includes('sunshine') || occasionNameLower.includes('just because') || occasion.emoji === '🌷') {
+        matched = allAvailable.filter(p => 
+          p.name.toLowerCase().includes('sunshine') || 
+          p.name.toLowerCase().includes('thinking') || 
+          p.tag?.toLowerCase().includes('sunshine') ||
+          p.tag?.toLowerCase().includes('just because') ||
+          p.occasionId === 5
+        );
       }
     }
 
-    return matched.length > 0 ? matched : products.slice(0, 4);
+    // 3. Guaranteed specific fallback from fallbackProducts for this occasion
+    if (matched.length === 0) {
+      matched = fallbackProducts.filter(p => p.occasionId === occasion.id);
+    }
+
+    return matched;
   };
 
   return (
@@ -156,15 +196,10 @@ export default function Occasions() {
                     <span>{occasion.feature}</span>
                   </span>
                   <Link
-                    to={`/shop?category=${
-                      occasion.emoji === '🎂' ? 'beauty' : 
-                      occasion.emoji === '👯' ? 'cozy' : 
-                      occasion.emoji === '🎓' ? 'cozy' : 
-                      occasion.emoji === '💕' ? 'floral' : 'all'
-                    }`}
+                    to={`/shop?occasion=${occasion.id}`}
                     className="inline-flex items-center justify-center gap-1 px-4 py-2 rounded-full bg-primary-container text-on-primary-container font-label-md text-label-md shadow-sm active:scale-95 transition-transform"
                   >
-                    <span>Explore ({occasion.count})</span>
+                    <span>Explore ({getProductsForOccasion(occasion).length || occasion.count})</span>
                     <span className="material-symbols-outlined text-[16px]">arrow_forward</span>
                   </Link>
                 </div>
@@ -213,8 +248,8 @@ export default function Occasions() {
                 </div>
                 <span className="font-label-sm text-label-sm text-primary font-semibold">FREE</span>
               </div>
-              <Link to="/shop?category=chocolates" className="relative z-10 flex-1 py-3 px-4 rounded-full bg-primary text-on-primary text-center font-label-lg text-label-lg shadow-[0_4px_16px_rgba(158,56,78,0.3)] active:scale-95 transition-transform flex items-center justify-center gap-1">
-                <span>Explore Care Packs ({occasion.count})</span>
+              <Link to="/shop?occasion=5" className="relative z-10 flex-1 py-3 px-4 rounded-full bg-primary text-on-primary text-center font-label-lg text-label-lg shadow-[0_4px_16px_rgba(158,56,78,0.3)] active:scale-95 transition-transform flex items-center justify-center gap-1">
+                <span>Explore Care Packs ({getProductsForOccasion(occasion).length || occasion.count})</span>
                 <span className="material-symbols-outlined text-[18px]">arrow_forward</span>
               </Link>
             </article>

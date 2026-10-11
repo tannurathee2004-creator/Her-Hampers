@@ -8,7 +8,12 @@ let API_URL = (import.meta.env.VITE_API_URL || 'http://localhost:5000/api').repl
 if (!API_URL.endsWith('/api')) API_URL += '/api';
 
 const filters = [
-  { key: 'all', label: 'All', count: 74 },
+  { key: 'all', label: 'All', count: 16 },
+  { key: 'birthday', label: '🎂 Birthday', occasionId: 1 },
+  { key: 'friendship', label: '👯 Bestie', occasionId: 2 },
+  { key: 'graduation', label: '🎓 Milestones', occasionId: 3 },
+  { key: 'romance', label: '💕 Romance', occasionId: 4 },
+  { key: 'sunshine', label: '🌷 Sunshine', occasionId: 5 },
   { key: 'beauty', label: 'Beauty & Self-Care' },
   { key: 'chocolates', label: 'Chocolates & Treats' },
   { key: 'cozy', label: 'Cute & Cozy' },
@@ -25,20 +30,45 @@ const sortOptions = [
 ];
 
 export default function Shop() {
+  const [searchParams] = useSearchParams();
+  const searchQuery = searchParams.get('search') || '';
+  const initialCategory = searchParams.get('category') || '';
+  const initialOccasion = searchParams.get('occasion') || '';
+
+  const getInitialFilter = () => {
+    if (initialOccasion) {
+      const match = filters.find(f => f.occasionId === Number(initialOccasion));
+      if (match) return match.key;
+    }
+    if (initialCategory && filters.some(f => f.key === initialCategory)) {
+      return initialCategory;
+    }
+    return 'all';
+  };
+
   const [products, setProducts] = useState([]);
-  const [activeFilter, setActiveFilter] = useState('all');
+  const [activeFilter, setActiveFilter] = useState(getInitialFilter);
   const [activeSort, setActiveSort] = useState('best');
   const [showSortMenu, setShowSortMenu] = useState(false);
   const [loading, setLoading] = useState(true);
   const sortRef = useRef(null);
-  const [searchParams] = useSearchParams();
-  const searchQuery = searchParams.get('search') || '';
+
+  useEffect(() => {
+    const current = getInitialFilter();
+    if (current !== 'all') {
+      setActiveFilter(current);
+    }
+  }, [initialCategory, initialOccasion]);
 
   useEffect(() => {
     setLoading(true);
     const params = new URLSearchParams();
+    const selectedFilterObj = filters.find(f => f.key === activeFilter);
+
     if (activeFilter !== 'all') {
-      if (activeFilter === 'budget') {
+      if (selectedFilterObj?.occasionId) {
+        params.set('occasion', selectedFilterObj.occasionId);
+      } else if (activeFilter === 'budget') {
         params.set('maxPrice', '999');
       } else if (activeFilter === 'luxury') {
         params.set('minPrice', '2000');
@@ -68,9 +98,15 @@ export default function Shop() {
         // Fallback to local data when backend is down
         let result = [...fallbackProducts];
         if (activeFilter !== 'all') {
-          if (activeFilter === 'budget') result = result.filter(p => p.price <= 999);
-          else if (activeFilter === 'luxury') result = result.filter(p => p.price >= 2000);
-          else result = result.filter(p => p.category === activeFilter);
+          if (selectedFilterObj?.occasionId) {
+            result = result.filter(p => p.occasionId === selectedFilterObj.occasionId);
+          } else if (activeFilter === 'budget') {
+            result = result.filter(p => p.price <= 999);
+          } else if (activeFilter === 'luxury') {
+            result = result.filter(p => p.price >= 2000);
+          } else {
+            result = result.filter(p => p.category === activeFilter);
+          }
         }
         if (searchQuery) {
           const q = searchQuery.toLowerCase();
