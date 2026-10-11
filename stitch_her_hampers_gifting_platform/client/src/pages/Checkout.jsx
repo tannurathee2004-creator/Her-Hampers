@@ -54,11 +54,12 @@ export default function Checkout() {
 
     setTimeout(() => {
       const orderId = `HH-${Math.floor(100000 + Math.random() * 900000)}`;
+      const codFee = formData.paymentMethod === 'cod' ? 100 : 0;
       const newOrder = {
         id: orderId,
         date: new Date().toLocaleDateString('en-IN', { day: 'numeric', month: 'short', year: 'numeric' }),
         items: [...cartItems],
-        total: cartTotal + (formData.deliverySlot === 'midnight' ? 199 : 0),
+        total: cartTotal + (formData.deliverySlot === 'midnight' ? 199 : 0) + codFee,
         status: 'Preparing with Love ✨',
         recipient: formData.recipientName,
         phone: formData.phone,
@@ -160,7 +161,8 @@ export default function Checkout() {
   }
 
   const shippingFee = formData.deliverySlot === 'midnight' ? 199 : 0;
-  const finalTotal = cartTotal + shippingFee;
+  const codFee = formData.paymentMethod === 'cod' ? 100 : 0;
+  const finalTotal = cartTotal + shippingFee + codFee;
 
   return (
     <div className="pt-24 px-margin pb-32 max-w-6xl mx-auto min-h-screen">
@@ -448,11 +450,21 @@ export default function Checkout() {
                     className="accent-primary"
                   />
                   <div>
-                    <p className="font-label-md text-sm font-bold text-on-surface">Cash / Pay on Delivery</p>
-                    <p className="text-[11px] text-on-surface-variant">Pay when the surprise box arrives</p>
+                    <div className="flex items-center gap-2">
+                      <p className="font-label-md text-sm font-bold text-on-surface">Cash / Pay on Delivery</p>
+                      <span className="px-2 py-0.5 rounded-full bg-primary/10 text-primary text-[10px] font-bold font-label-sm">
+                        +₹100 Extra
+                      </span>
+                    </div>
+                    <p className="text-[11px] text-on-surface-variant font-medium">
+                      Extra 100 rs. will be charged for cash on delivery handling • Pay upon arrival
+                    </p>
                   </div>
                 </div>
-                <span className="material-symbols-outlined text-on-surface-variant text-[20px]">local_atm</span>
+                <div className="flex flex-col items-end">
+                  <span className="material-symbols-outlined text-on-surface-variant text-[20px]">local_atm</span>
+                  <span className="font-label-sm text-[10px] font-bold text-primary">+₹100</span>
+                </div>
               </label>
             </div>
           </div>
@@ -489,6 +501,12 @@ export default function Checkout() {
                 <span>Express Shipping</span>
                 <span className="text-primary font-semibold">{shippingFee === 0 ? 'FREE' : `₹${shippingFee}`}</span>
               </div>
+              {codFee > 0 && (
+                <div className="flex justify-between text-on-surface-variant bg-primary-fixed/20 px-2 py-1 rounded-lg">
+                  <span className="text-primary font-medium">COD Handling Fee</span>
+                  <span className="text-primary font-bold">+₹{codFee}</span>
+                </div>
+              )}
               <div className="flex justify-between text-on-surface-variant">
                 <span>Satin Ribbon & Keepsake Box</span>
                 <span className="text-secondary font-semibold">Included</span>
