@@ -3,12 +3,13 @@ import { useWishlist } from '../contexts/WishlistContext';
 
 export default function WishlistButton({ product, className = '', size = 18 }) {
   const { isInWishlist, toggleWishlist } = useWishlist();
-  const wishlisted = isInWishlist(product.id);
+  const wishlisted = product?.id ? isInWishlist(product.id) : false;
   const btnRef = useRef(null);
 
   const handleClick = (e) => {
     e.preventDefault();
     e.stopPropagation();
+    if (!product) return;
     toggleWishlist(product);
 
     // Subtle pop animation

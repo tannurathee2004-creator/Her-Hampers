@@ -1,0 +1,72 @@
+[
+  {
+    "id": 1,
+    "name": "Birthday Glow",
+    "emoji": "🎂",
+    "badge": "Most Popular",
+    "description": "Sparkling rosé, bespoke jewelry & artisanal confections",
+    "startingPrice": 1499,
+    "rating": 4.9,
+    "reviews": 1200,
+    "count": 32,
+    "feature": "Includes keepsake box",
+    "featureIcon": "sparkles",
+    "image": "https://images.unsplash.com/photo-1513201099705-a9746e1e201f?w=800&q=80"
+  },
+  {
+    "id": 2,
+    "name": "Friendship & Cozy Hugs",
+    "emoji": "👯",
+    "badge": "For Your Bestie",
+    "description": "Plush knit socks, warm ceramic mugs & self-care treats",
+    "startingPrice": 999,
+    "rating": 4.8,
+    "reviews": 840,
+    "count": 18,
+    "feature": "Relaxation certified",
+    "featureIcon": "spa",
+    "image": "https://images.unsplash.com/photo-1549465220-1a8b9238cd48?w=800&q=80"
+  },
+  {
+    "id": 3,
+    "name": "Graduation & Boss Girl",
+    "emoji": "🎓",
+    "badge": "Big Wins",
+    "description": "Gold-foiled planners, custom tumblers & keepsake cards",
+    "startingPrice": 1299,
+    "rating": 5,
+    "reviews": 420,
+    "count": 14,
+    "feature": "Custom Name Foiling",
+    "featureIcon": "edit_note",
+    "image": "https://images.unsplash.com/photo-1555529771-835f59fc5efe?w=800&q=80"
+  },
+  {
+    "id": 4,
+    "name": "Luxe Anniversary Hatbox",
+    "emoji": "💕",
+    "badge": "Pure Romance",
+    "description": "Blush ranunculus, lavender candle & fine keepsake box",
+    "startingPrice": 1899,
+    "rating": 4.9,
+    "reviews": 610,
+    "count": 22,
+    "feature": "Fresh Silk Petals",
+    "featureIcon": "local_florist",
+    "image": "https://images.unsplash.com/photo-1607344645866-009c320b63e0?w=800&q=80"
+  },
+  {
+    "id": 5,
+    "name": "A Little Sunshine",
+    "emoji": "🌷",
+    "badge": "Just Because",
+    "description": "Surprise self-love deliveries with handwritten wax-seal notes and petite treats to brighten her Tuesday.",
+    "startingPrice": 799,
+    "rating": 4.7,
+    "reviews": 350,
+    "count": 15,
+    "feature": "Wax-Sealed Love Note",
+    "featureIcon": "mail",
+    "image": null
+  }
+]

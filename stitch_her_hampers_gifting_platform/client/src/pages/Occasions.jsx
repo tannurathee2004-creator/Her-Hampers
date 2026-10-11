@@ -3,6 +3,7 @@ import { Link } from 'react-router-dom';
 import WishlistButton from '../components/WishlistButton';
 import ProductCard from '../components/ProductCard';
 import fallbackProducts from '../data/products.json';
+import fallbackOccasions from '../data/occasions.json';
 
 let API_URL = (import.meta.env.VITE_API_URL || 'http://localhost:5000/api').replace(/\/$/, '');
 if (!API_URL.endsWith('/api')) API_URL += '/api';
@@ -16,19 +17,27 @@ const occasionChips = [
 ];
 
 export default function Occasions() {
-  const [occasions, setOccasions] = useState([]);
-  const [products, setProducts] = useState([]);
+  const [occasions, setOccasions] = useState(fallbackOccasions);
+  const [products, setProducts] = useState(fallbackProducts);
   const [activeChip, setActiveChip] = useState(0);
 
   useEffect(() => {
     fetch(`${API_URL}/occasions`)
       .then(res => res.json())
-      .then(data => setOccasions(data.occasions || []))
-      .catch(() => setOccasions([]));
+      .then(data => {
+        if (data && data.occasions && data.occasions.length > 0) {
+          setOccasions(data.occasions);
+        }
+      })
+      .catch(() => setOccasions(fallbackOccasions));
       
     fetch(`${API_URL}/products?sort=best`)
       .then(res => res.json())
-      .then(data => setProducts(data.products || []))
+      .then(data => {
+        if (data && data.products && data.products.length > 0) {
+          setProducts(data.products);
+        }
+      })
       .catch(() => setProducts(fallbackProducts));
   }, []);
 
@@ -109,10 +118,10 @@ export default function Occasions() {
                   <span>{occasion.emoji}</span>
                   <span>{occasion.badge}</span>
                 </div>
-                <WishlistButton className="absolute top-3.5 right-3.5 w-9 h-9" />
+                <WishlistButton product={occasion} className="absolute top-3.5 right-3.5 w-9 h-9" />
                 <div className="absolute bottom-3.5 right-3.5 px-3 py-1 rounded-full bg-primary/95 text-on-primary font-currency-md text-currency-md shadow-lg flex items-center gap-1">
                   <span className="font-label-sm text-[11px] opacity-90">Starting</span>
-                  <span>₹{occasion.startingPrice.toLocaleString('en-IN')}</span>
+                  <span>₹{(occasion.startingPrice || 0).toLocaleString('en-IN')}</span>
                 </div>
               </div>
               <div className="p-4 flex flex-col gap-2">
@@ -171,7 +180,7 @@ export default function Occasions() {
                   <span>{occasion.badge}</span>
                 </div>
                 <span className="px-3 py-1 rounded-full bg-tertiary-container text-on-tertiary-container font-currency-md text-currency-md text-xs shadow-sm">
-                  Starting from ₹{occasion.startingPrice}
+                  Starting from ₹{(occasion.startingPrice || 0).toLocaleString('en-IN')}
                 </span>
               </div>
               <h3 className="font-headline-sm text-headline-sm text-on-surface font-semibold mb-1">{occasion.name}</h3>
