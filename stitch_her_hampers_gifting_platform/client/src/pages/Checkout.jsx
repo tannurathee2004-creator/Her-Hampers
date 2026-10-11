@@ -1,6 +1,9 @@
 import { useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import { useCart } from '../contexts/CartContext';
+import indiaStatesAndCities from '../data/indiaStatesAndCities.json';
+
+const statesList = Object.keys(indiaStatesAndCities);
 
 export default function Checkout() {
   const { cartItems, cartTotal, clearCart } = useCart();
@@ -12,6 +15,7 @@ export default function Checkout() {
     phone: '',
     email: '',
     address: '',
+    state: 'Maharashtra',
     city: 'Mumbai',
     pincode: '',
     deliverySlot: 'standard', // 'standard' | 'midnight'
@@ -26,6 +30,16 @@ export default function Checkout() {
   const handleInputChange = (e) => {
     const { name, value } = e.target;
     setFormData(prev => ({ ...prev, [name]: value }));
+  };
+
+  const handleStateChange = (e) => {
+    const newState = e.target.value;
+    const availableCities = indiaStatesAndCities[newState] || [];
+    setFormData(prev => ({
+      ...prev,
+      state: newState,
+      city: availableCities[0] || '',
+    }));
   };
 
   const handlePlaceOrder = (e) => {
@@ -48,7 +62,7 @@ export default function Checkout() {
         status: 'Preparing with Love ✨',
         recipient: formData.recipientName,
         phone: formData.phone,
-        address: `${formData.address}, ${formData.city} - ${formData.pincode}`,
+        address: `${formData.address}, ${formData.city}, ${formData.state} - ${formData.pincode}`,
         deliverySlot: formData.deliverySlot === 'midnight' ? 'Midnight Delivery (11:30 PM - 12:00 AM)' : 'Standard Express Delivery (Same-Day)',
         note: formData.personalizedNote,
         seal: formData.waxSealColor,
@@ -235,32 +249,51 @@ export default function Checkout() {
                 className="w-full px-4 py-2.5 rounded-xl border border-outline-variant bg-surface-container-low text-on-surface focus:outline-none focus:border-primary text-sm resize-none"
               />
             </div>
-            <div className="grid grid-cols-2 gap-4">
+            <div className="grid grid-cols-1 sm:grid-cols-3 gap-4">
               <div>
-                <label className="block font-label-sm text-[12px] text-on-surface-variant mb-1 font-semibold">City</label>
+                <label className="block font-label-sm text-[12px] text-on-surface-variant mb-1 font-semibold">State / UT *</label>
                 <select
-                  name="city"
-                  value={formData.city}
-                  onChange={handleInputChange}
-                  className="w-full px-4 py-2.5 rounded-xl border border-outline-variant bg-surface-container-low text-on-surface focus:outline-none focus:border-primary text-sm"
+                  name="state"
+                  required
+                  value={formData.state}
+                  onChange={handleStateChange}
+                  className="w-full px-3.5 py-2.5 rounded-xl border border-outline-variant bg-surface-container-low text-on-surface focus:outline-none focus:border-primary text-sm cursor-pointer"
                 >
-                  <option value="Mumbai">Mumbai (Same-Day)</option>
-                  <option value="Delhi NCR">Delhi NCR (Same-Day)</option>
-                  <option value="Bangalore">Bangalore (Same-Day)</option>
-                  <option value="Pune">Pune (Next-Day)</option>
-                  <option value="Hyderabad">Hyderabad (Next-Day)</option>
-                  <option value="Other">Other Metro Cities</option>
+                  {statesList.map((stateName) => (
+                    <option key={stateName} value={stateName}>
+                      {stateName}
+                    </option>
+                  ))}
                 </select>
               </div>
               <div>
-                <label className="block font-label-sm text-[12px] text-on-surface-variant mb-1 font-semibold">PIN Code</label>
+                <label className="block font-label-sm text-[12px] text-on-surface-variant mb-1 font-semibold">
+                  City (in {formData.state}) *
+                </label>
+                <select
+                  name="city"
+                  required
+                  value={formData.city}
+                  onChange={handleInputChange}
+                  className="w-full px-3.5 py-2.5 rounded-xl border border-outline-variant bg-surface-container-low text-on-surface focus:outline-none focus:border-primary text-sm cursor-pointer"
+                >
+                  {(indiaStatesAndCities[formData.state] || []).map((cityName) => (
+                    <option key={cityName} value={cityName}>
+                      {cityName}
+                    </option>
+                  ))}
+                </select>
+              </div>
+              <div>
+                <label className="block font-label-sm text-[12px] text-on-surface-variant mb-1 font-semibold">PIN Code *</label>
                 <input
                   type="text"
                   name="pincode"
+                  required
                   placeholder="e.g. 400050"
                   value={formData.pincode}
                   onChange={handleInputChange}
-                  className="w-full px-4 py-2.5 rounded-xl border border-outline-variant bg-surface-container-low text-on-surface focus:outline-none focus:border-primary text-sm"
+                  className="w-full px-3.5 py-2.5 rounded-xl border border-outline-variant bg-surface-container-low text-on-surface focus:outline-none focus:border-primary text-sm"
                 />
               </div>
             </div>
