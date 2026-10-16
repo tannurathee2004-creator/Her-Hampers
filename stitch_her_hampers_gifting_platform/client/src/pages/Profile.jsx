@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import { useUser } from '../contexts/UserContext';
 import indiaStatesAndCities from '../data/indiaStatesAndCities.json';
@@ -6,10 +6,16 @@ import indiaStatesAndCities from '../data/indiaStatesAndCities.json';
 const statesList = Object.keys(indiaStatesAndCities);
 
 export default function Profile() {
-  const { profile, updateProfile } = useUser();
+  const { profile, updateProfile, isLoggedIn, loginAsDemo } = useUser();
   const [isEditing, setIsEditing] = useState(false);
   const [formData, setFormData] = useState(profile);
   const [saveToast, setSaveToast] = useState(false);
+
+  useEffect(() => {
+    if (profile) {
+      setFormData(profile);
+    }
+  }, [profile]);
 
   const handleInputChange = (e) => {
     const { name, value } = e.target;
@@ -51,7 +57,34 @@ export default function Profile() {
       
       {/* Profile Card */}
       <div className="bg-surface-container-lowest p-6 sm:p-8 rounded-3xl shadow-[0_4px_20px_rgba(72,52,65,0.06)] border border-outline-variant/30 mb-8">
-        {!isEditing ? (
+        {!isLoggedIn ? (
+          <div className="text-center py-4">
+            <div className="w-16 h-16 rounded-full bg-surface-container-high text-on-surface-variant flex items-center justify-center mx-auto mb-4">
+              <span className="material-symbols-outlined text-[32px]">lock_person</span>
+            </div>
+            <h2 className="font-headline-sm text-xl text-on-surface mb-2 font-bold">
+              You are signed out
+            </h2>
+            <p className="font-body-md text-on-surface-variant max-w-md mx-auto mb-6 text-sm">
+              Sign in to view and edit your profile details, auto-fill your delivery addresses at checkout, and track orders.
+            </p>
+            <div className="flex flex-wrap items-center justify-center gap-3">
+              <button
+                onClick={loginAsDemo}
+                className="px-6 py-2.5 rounded-full bg-primary text-on-primary font-label-md text-sm font-semibold hover:bg-primary/90 transition-all shadow-sm active:scale-95 flex items-center gap-2"
+              >
+                <span className="material-symbols-outlined text-[18px]">verified_user</span>
+                Sign In as Ananya Sharma (Demo)
+              </button>
+              <Link
+                to="/settings"
+                className="px-6 py-2.5 rounded-full border border-outline font-label-md text-sm text-on-surface hover:bg-surface-container-high transition-all"
+              >
+                Sign In Options in Settings
+              </Link>
+            </div>
+          </div>
+        ) : !isEditing ? (
           <div>
             <div className="flex flex-col sm:flex-row items-center sm:items-start gap-6 pb-6 border-b border-outline-variant/30">
               <div className="w-20 h-20 rounded-full bg-primary flex items-center justify-center shadow-md text-on-primary">

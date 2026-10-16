@@ -13,6 +13,18 @@ const DEFAULT_PROFILE = {
 };
 
 export function UserProvider({ children }) {
+  const [isLoggedIn, setIsLoggedIn] = useState(() => {
+    try {
+      const savedAuth = localStorage.getItem('her_hampers_is_logged_in');
+      if (savedAuth !== null) {
+        return savedAuth === 'true';
+      }
+      return true; // Default to true for initial demo experience
+    } catch {
+      return true;
+    }
+  });
+
   const [profile, setProfile] = useState(() => {
     try {
       const saved = localStorage.getItem('her_hampers_user_profile');
@@ -134,14 +146,51 @@ export function UserProvider({ children }) {
     }
   };
 
+  const logout = () => {
+    setIsLoggedIn(false);
+    try {
+      localStorage.setItem('her_hampers_is_logged_in', 'false');
+    } catch (err) {
+      console.error('Failed to save logout state to localStorage', err);
+    }
+  };
+
+  const login = (customData) => {
+    setIsLoggedIn(true);
+    try {
+      localStorage.setItem('her_hampers_is_logged_in', 'true');
+    } catch (err) {
+      console.error('Failed to save login state to localStorage', err);
+    }
+    if (customData) {
+      setProfile(prev => ({ ...prev, ...customData }));
+    }
+  };
+
+  const loginAsDemo = () => {
+    setProfile(DEFAULT_PROFILE);
+    setIsLoggedIn(true);
+    try {
+      localStorage.setItem('her_hampers_is_logged_in', 'true');
+      localStorage.setItem('her_hampers_user_profile', JSON.stringify(DEFAULT_PROFILE));
+    } catch (err) {
+      console.error('Failed to save demo login to localStorage', err);
+    }
+  };
+
   return (
     <UserContext.Provider value={{
+      isLoggedIn,
       profile,
       updateProfile,
       addresses,
       addAddress,
       deleteAddress,
-      setDefaultAddress
+      setDefaultAddress,
+      login,
+      logout,
+      loginAsDemo,
+      DEFAULT_PROFILE
     }}>
       {children}
     </UserContext.Provider>
